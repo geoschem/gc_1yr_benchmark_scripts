@@ -81,7 +81,7 @@
 
    The `job_depend.pl` script to submits all of the run scripts with the proper dependencies.   The first run will compile GEOS-Chem and copy the executable to the run directory.
 
-   NOTE: `The setup_1yr_run` script creates the monthly bash scripts in the `run/` subdirectory. If you need to modify the monthly bash scripts, you can modify the `run.template` file and then execute this command:
+   NOTE: `The setup_1yr_run` script creates the monthly bash scripts in the `run/` subdirectory. If you need to modify the monthly bash scripts you can modify the `run.template` file and then execute this command:
 
    ```console
    $ ./make_runscripts GCC_X.Y-Z-rc.N 2018 7 18
@@ -89,6 +89,23 @@
 
    The run scripts will use 48 CPUs on `sapphire`,`huce_cascade`,`seas_compute`, or `shared` partitions, whichever has available nodes first.
 
+   NOTE: The `GCC_X.Y.Z-rc.N.201807` run script will compile GEOS-Chem
+   Classic.  If you need to add a special compilation command (such as to toggle the Luo wetdep scheme), add it to the CMake command in this block:
+   
+   ```bash
+   # Compile the code before starting the initial run
+   if [[ "x${RUN}" == "x01" ]]; then
+       cd build
+       cmake ../CodeDir -DRUNDIR=..  # <== add other CMake options here
+       make -j
+       make -j install
+       cd ..
+       if [[ ! -f ./gcclassic ]]; then
+           echo "Compilation error occurred. Could not start run."
+           exit 1
+       fi
+   fi
+   ```
 
 ## Create the benchmark plots and tables
 
@@ -126,47 +143,6 @@
    ```
 
    Each of these folders will be further organized into subfolders  containing the various plots and tables.
-
-
-4. Generate additional "Model vs. Observations" plots with IDL.
-
-   First, navigate to the `IDL/input` folder in your clone of this repository:
-
-   ```console
-   $ cd ~/GC/benchmarks/1yr/IDL/input
-   ```
-
-
-5. Navigate to the `IDL/input` folder and create a new configuration file for the current benchmark version.:
-
-   ```console
-   $ cd input
-
-   $ cp GCC_14.3.0-rc.0.1yr GCC_X.Y.Z-rc.N.1yr  # Replace X, Y, Z, N with version numbers
-   ```
-   Then open `GCC_X.Y.Z-rc.N.1yr` in your favorite editor and update version numbers `V1` and `V2`.
-
-
-6. Run the following commands.  (Replace `X.Y.Z-rc.N` with the benchmark version number).
-
-   ```console
-   $ cd ..     # Navigates back to the IDL folder
-   $ idl
-   IDL> benchmark_1yr, ‘input/GCC_X.Y.Z-rc.N.1yr’, /DO_PDF, /DO_Ox
-   IDL> benchmark_1yr, ‘input/GCC_X.Y.Z-rc.N.1yr’, /DO_PDF, /DO_CO
-   IDL> benchmark_1yr, ‘input/GCC_X.Y.Z-rc.N.1yr’, /DO_PDF, /DO_MOZAIC
-   IDL> benchmark_1yr, ‘input/GCC_X.Y.Z-rc.N.1yr’, /DO_PDF, /DO_AIRCRAFT
-   IDL> benchmark_1yr, ‘input/GCC_X.Y.Z-rc.N.1yr’, /DO_PDF, /DO_AEROSOL
-   IDL> benchmark_1yr, ‘input/GCC_X.Y.Z-rc.N.1yr’, /DO_PDF, /DO_PAN
-   IDL> exit
-   ```
-
-7. After creating all model vs observation benchmark plots, move the PDF files to the `Benchmark_Results/GCC_version_comparison/ModelVsObs` folder:
-
-   ```console
-   $ cd move_output
-   $ ./move_output.sh /path/to/GCClassic/FullChem/BenchmarkResults/GCC_version_comparison
-   ```
 
 ## Archiving results
 

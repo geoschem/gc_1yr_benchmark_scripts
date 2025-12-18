@@ -48,12 +48,6 @@
    GCPY_ROOT="$HOME/gcpy"
 
    THIS_REPO_ROOT="$HOME/GC/benchmarks/1yr"
-
-   START_YR=2018
-   START_MON=7
-   N_MONTHS=18
-
-   TEMP="temp.txt"
    ```
 
    Typically you will only need to edit `BM_VERSION` (the version string), `GCPY_ROOT` and (path to your GCPy top-level folder).
@@ -86,7 +80,23 @@
 
    The run scripts will use 48 CPUs on `sapphire`,`huce_cascade`,`seas_compute`, or `shared` partitions, whichever has available nodes first.
 
-
+   NOTE: The `GCC_14.7.0-rc.N-TransportTracers.2009` run script will compile GEOS-Chem Classic.  If you need to add a special compilation command (such as to toggle the Luo wetdep scheme), add it to the CMake command in this block:
+   
+   ```bash
+   # Compile the code before starting the initial run
+   if [[ "x${RUN}" == "x01" ]]; then
+       cd build
+       cmake ../CodeDir -DRUNDIR=..  # <== add other CMake options here
+       make -j
+       make -j install
+       cd ..
+       if [[ ! -f ./gcclassic ]]; then
+           echo "Compilation error occurred. Could not start run."
+           exit 1
+       fi
+   fi
+   ```
+   
 ## Create the benchmark plots and tables
 
 1. Navigate to the `GCClassic/TransportTracers/BenchmarkResults` folder.
