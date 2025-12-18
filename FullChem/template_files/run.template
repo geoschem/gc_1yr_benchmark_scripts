@@ -3,7 +3,7 @@
 #SBATCH -c 48
 #SBATCH -N 1
 #SBATCH -t 0-6:00
-#SBATCH -p huce_cascade,seas_compute,shared
+#SBATCH -p sapphire,huce_cascade,seas_compute,shared
 #SBATCH --mem=28000
 #SBATCH --mail-type=END
 
@@ -81,7 +81,7 @@ TIME2="000000"
 cd ..
 
 # Source the GNU10 environment file
-source "./runScriptSamples/operational_examples/harvard_cannon/gcclassic.gcc10_cannon_rocky.env"
+source "./runScriptSamples/operational_examples/harvard_cannon/gcclassic.gcc12_cannon_rocky.env"
 
 # Set input file
 YML="./Config/geoschem_config.yml.template"
