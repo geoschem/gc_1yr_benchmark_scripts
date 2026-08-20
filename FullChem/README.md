@@ -64,10 +64,11 @@
    $ ./setup_1yr_run
    ```
 
-6. Copy the 2019/07/01 restart file from the last 1-year benchmark to the `Restarts/` folder.  This will be the initial conditions used to spin up the benchmarks simulation.  Rename this file to 2018/07/01:
+6. Copy the 2019/07/01 restart file from the last 1-year benchmark to the `Restarts/` folder.  This will be the initial conditions used to spin up the benchmarks simulation.  Rename this file to 2018/07/01 and change the reference date:
 
    ```console
    $ mv GEOSChem.Restart.20190701_0000z.nc4 GEOSChem.Restart.20180701_0000z.nc4
+   $ ncatted -a units,time,o,c,"minutes since 2018-07-01 00:00:00" GEOSChem.Restart.20180701_0000z.nc4
    ```
 
 
