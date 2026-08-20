@@ -3,7 +3,7 @@
 #SBATCH -c 48
 #SBATCH -N 1
 #SBATCH -t 0-6:00
-#SBATCH -p sapphire,huce_cascade,seas_compute,shared
+#SBATCH -p sapphire,huce_ice,huce_cascade,seas_compute,shared
 #SBATCH --mem=28000
 #SBATCH --mail-type=END
 
