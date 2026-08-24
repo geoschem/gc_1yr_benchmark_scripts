@@ -53,16 +53,29 @@
    Typically you will only need to edit `BM_VERSION` (the version string), `GCPY_ROOT` and (path to your GCPy top-level folder).
 
 
-5. Copy the 2019/01/01 restart file from the last 1-year benchmark to the `Restarts/` folder.  This will be the initial conditions used to spin up the benchmarks simulation.  This file will be automatically renamed by the setup script.
-   
+5. Copy the 2019/01/01 restart file from the last 1-year benchmark to the `Restarts/` folder.  This will be the initial conditions used to spin up the benchmarks simulation.  This file will be  automatically renamed by the setup script.
 
-6. Excecute the setup script:
+
+6. If the `PassiveTracer` species is not constant, then set it to 100 ppbv (1e-7 v/v):
+   
+   ```console
+   # GCClassic
+   ncap2 -O -s
+   'SpeciesRst_PassiveTracer=array(1e-7,0,SpeciesRst_PassiveTracer)' GEOSChem.Restart.20190101_0000z.nc4 tmp.nc
+   mv tmp.nc GEOSChem.Restart.20190101_0000z.nc4
+
+   # GCHP
+   ncap2 -O -s 'SPC_PassiveTracer=array(1e-7,0,SPC_PassiveTracer)' GEOSChem.Restart.20190101_0000z.c24.nc4 tmp.nc
+   mv tmp.nc GEOSChem.Restart.20190101_0000z.c24.nc4
+   ```
+
+7. Excecute the setup script:
 
    ```console
    $ ./setup_1yr_transport_bm
    ```
 
-7. Navigate to the `RunScripts/` subdirectory and submit run scripts to the queue:
+8. Navigate to the `RunScripts/` subdirectory and submit run scripts to the queue:
 
    ```console
    $ cd RunScripts
@@ -96,7 +109,9 @@
        fi
    fi
    ```
-   
+
+NOTE: You will also need to make sure that the `PassiveTracer` species is set to a constant value of `1.0e-7` before starting the last run stage.  In that case, comment out the line in `job_depend.pl` that submits the job for 2019/01/01.  Then follow the directions in step 6 once the 2019/01/01 restart file is created and submit the 2019 job manually.
+
 ## Create the benchmark plots and tables
 
 1. Navigate to the `GCClassic/TransportTracers/BenchmarkResults` folder.
