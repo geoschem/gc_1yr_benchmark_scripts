@@ -8,7 +8,7 @@ directory. Follow these steps:
    2. Copy the setup_1yr_run script from this directory into your newly
       created run directory
 
-   3. Open setup_1yr_run and modify BM_VERSION, START_YR, START_MONTH, N_MONTHS
+   3. Open setup_1yr_run and modify BM_VERSION, START_YR, START_MON, N_MONTHS
       as needed
 
    4. Execute "./setup_1yr_run"
