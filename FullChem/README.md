@@ -188,3 +188,13 @@
 
 
 7. Send a benchmark email to developers and GCSC asking for approval.
+
+## 10-year full-chemistry benchmark
+
+`template_files/setup_10yr_run` sets up a 10-year full-chemistry run directory. Follow the steps in [Set up and run the simulation](#set-up-and-run-the-simulation), with these differences:
+
+- Copy and edit `setup_10yr_run` instead of `setup_1yr_run`. It has no `START_MON` or `N_MONTHS` settings, because it always creates 120 monthly run scripts starting in January of `START_YR` (`2018` by default), i.e. `GCC_X.Y.Z-rc.N.201801` through `GCC_X.Y.Z-rc.N.202712`.
+- The initial restart file must be named `Restarts/GEOSChem.Restart.20180101_0000z.nc4`, with the reference date set to `minutes since 2018-01-01 00:00:00`.
+- `setup_10yr_run` rewrites the `@jobs` list in `RunScripts/job_depend.pl` to cover all 120 run scripts, so you do not need to edit it. If you regenerate the run scripts by hand, use `./make_runscripts GCC_X.Y.Z-rc.N 2018 1 120`.
+
+The 10-year benchmark reuses the 1-year `pack_1yr_run`, `copy_1yr_run`, and GCPy configuration file.

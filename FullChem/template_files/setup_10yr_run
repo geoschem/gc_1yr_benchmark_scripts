@@ -21,10 +21,6 @@
 #BOC
 
 #----------------------------------------------------------------
-# Define version name
-#----------------------------------------------------------------
-
-#----------------------------------------------------------------
 # Configurable settings (edit accordingly)
 #----------------------------------------------------------------
 
@@ -137,16 +133,19 @@ sed -i -e "s/$OLD10/$NEW10/g" "${inFile}"
 echo -e "Setting up run scripts\n"
 cp ${THIS_REPO_ROOT}/FullChem/template_files/run.template RunScripts/
 cp ${THIS_REPO_ROOT}/FullChem/template_files/make_runscripts RunScripts/
-cp ${THIS_REPO_ROOT}/template_files/job_depend.pl RunScripts/
+cp ${THIS_REPO_ROOT}/FullChem/template_files/job_depend.pl RunScripts/
 cd RunScripts
 ./make_runscripts "${BM_VERSION}" "${START_YR}" 1 120
-sed -i -e "s/GCC_X\.Y\.Z\-rc\.N/${BM_VERSION}/g" job_depend.pl
+# The @jobs list in job_depend.pl only covers the 18 1-yr stages,
+# so replace it with the 120 run scripts that were just created
+JOBS=$(printf "%s " "${BM_VERSION}".[0-9][0-9][0-9][0-9][0-9][0-9])
+perl -0pi -e "s{qw/.*?/;}{qw/${JOBS}/;}s" job_depend.pl
 cd ..
 
 #----------------------------------------------------------------
 # Copy other necessary files
 #----------------------------------------------------------------
-echo -e "Setting up run scripts\n"
+echo -e "Copying other necessary files\n"
 cp ${THIS_REPO_ROOT}/FullChem/template_files/pack_1yr_run .
 cp ${THIS_REPO_ROOT}/FullChem/template_files/copy_1yr_run .
 cp ${GCPY_ROOT}/gcpy/benchmark/config/1yr_fullchem_benchmark.yml BenchmarkResults/
