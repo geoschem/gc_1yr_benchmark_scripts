@@ -11,7 +11,7 @@
 #\\
 #\\
 # !CALLING SEQUENCE:
-#  make_runscripts VERSION START-YEAR [NUMBER-OF-RUNS]
+#  make_runscripts VERSION START-YEAR START-MONTH [NUMBER-OF-RUNS]
 #
 # !REVISION HISTORY: 
 #  03 Mar 2016 - M. Sulprizio- Initial version

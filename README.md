@@ -8,7 +8,7 @@ This repository contains run directory setup scripts and model vs observation ID
 
 This folder contains scripts used to set up GEOS-Chem Classic 1-year and 10-year) full-chemistry benchmark simulations.
 
-`template_scripts`
+`template_files`
 
 - Contains bash scripts for setting up, running, and compresing 1-year FullChem benchmark run directories.
 
@@ -28,7 +28,7 @@ This folder contains scripts used to set up GEOS-Chem Classic 1-year and 10-year
 
 ### TransportTracers
 
-`template_scripts`
+`template_files`
 
 - Contains bash scripts for setting up, running, and compresing 1-year TransportTracers benchmark run directories.
 
