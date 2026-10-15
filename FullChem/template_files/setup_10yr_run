@@ -21,10 +21,6 @@
 #BOC
 
 #----------------------------------------------------------------
-# Define version name
-#----------------------------------------------------------------
-
-#----------------------------------------------------------------
 # Configurable settings (edit accordingly)
 #----------------------------------------------------------------
 
@@ -149,7 +145,7 @@ cd ..
 #----------------------------------------------------------------
 # Copy other necessary files
 #----------------------------------------------------------------
-echo -e "Setting up run scripts\n"
+echo -e "Copying other necessary files\n"
 cp ${THIS_REPO_ROOT}/FullChem/template_files/pack_1yr_run .
 cp ${THIS_REPO_ROOT}/FullChem/template_files/copy_1yr_run .
 cp ${GCPY_ROOT}/gcpy/benchmark/config/1yr_fullchem_benchmark.yml BenchmarkResults/
